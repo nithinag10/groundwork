@@ -1,26 +1,71 @@
+/* Clash Display carries the brand personality — loaded via Fontshare. */
+@import url("https://api.fontshare.com/v2/css?f[]=clash-display@600,700&display=swap");
 @import "tailwindcss";
 
+/* --- Design tokens (brand.md §4). The single source of truth. --- */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --bg: #0b0a09; /* warm near-black, NOT pure #000 */
+  --bg-elev: #15130e; /* warm raised surface for cards */
+  --text: #ece6da; /* warm bone, primary text */
+  --text-muted: #8b857a; /* warm grey, secondary */
+  --border: #26231c; /* warm hairline */
+  --accent: #f5a524; /* molten saffron-gold — the ONE accent */
+  --accent-ink: #0b0a09; /* text on accent fills */
+  --live: #3fb950; /* ONLY the "live in production" status dot */
+
+  color-scheme: dark;
 }
 
+/* Map tokens into Tailwind utilities (bg-bg, text-text-muted, border-border…). */
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-bg: var(--bg);
+  --color-bg-elev: var(--bg-elev);
+  --color-text: var(--text);
+  --color-text-muted: var(--text-muted);
+  --color-border: var(--border);
+  --color-accent: var(--accent);
+  --color-accent-ink: var(--accent-ink);
+  --color-live: var(--live);
+
+  --font-display: "Clash Display", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, monospace;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  scroll-behavior: smooth;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Anchors land below the sticky nav. */
+section[id] {
+  scroll-margin-top: 5rem;
+}
+
+/* Eyebrow motif — mono, uppercase, letter-spaced, muted (brand.md §4). */
+.eyebrow {
+  font-family: var(--font-mono);
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
 }
